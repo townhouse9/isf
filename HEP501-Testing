@@ -1,0 +1,122 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/townhouse9/isf/blob/master/HEP501-Testing\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import csv\n",
+        "import pandas as pd\n",
+        "import os\n",
+        "\n",
+        "# Prompt user to specify a .csv file to open\n",
+        "file_name = input(\"Enter the name of the .csv file to open: \")\n",
+        "\n",
+        "# Check that the file exists\n",
+        "if not os.path.exists(file_name):\n",
+        "    print(\"The file {} does not exist.\".format(file_name))\n",
+        "    exit()\n",
+        "\n",
+        "# Open the file in read mode\n",
+        "with open(file_name, \"r\") as f:\n",
+        "    reader = csv.reader(f)\n",
+        "\n",
+        "    # Create a Pandas DataFrame from the CSV file\n",
+        "    df = pd.DataFrame(reader)\n",
+        "\n",
+        "    # Print all rows to screen\n",
+        "    print(df)\n",
+        "\n",
+        "    # Skip the first row, which contains the column headers\n",
+        "    df = df.iloc[1:]\n",
+        "\n",
+        "    # Convert the values in column 2 and column 3 to floats\n",
+        "    df[1] = df[1].str.replace(\",\", \"\").astype(float)\n",
+        "    df[2] = df[2].str.replace(\",\", \"\").astype(float)\n",
+        "\n",
+        "    # Calculate the average value within column 2 and column 3\n",
+        "    average_value_column_2 = df[1].mean()\n",
+        "    average_value_column_3 = df[2].mean()\n",
+        "    print(\"The average Air Temperature is: {:.2f}\".format(average_value_column_2))\n",
+        "    print(\"The average CPU Temperature is: {:.2f}\".format(average_value_column_3))\n",
+        "\n",
+        "    # Get the total number of records in the file\n",
+        "    total_records = len(df)\n",
+        "    print(\"The total number of records in the file is: {}\".format(total_records))\n",
+        "\n",
+        "    # Prompt the user to close the file\n",
+        "    print(\"Press Enter to close the file\")\n",
+        "    input().strip()\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 693
+        },
+        "id": "RNnrLuWUJIKI",
+        "outputId": "c3379d97-87e2-4ee7-dc50-46a72414b857"
+      },
+      "execution_count": 16,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Enter the name of the .csv file to open: hep501-data.csv\n",
+            "                 0      1      2\n",
+            "0        Timestamp    Air    CPU\n",
+            "1       1634036226  21.69  31.95\n",
+            "2       1634036406  21.67  32.07\n",
+            "3       1634036586  21.75  32.16\n",
+            "4       1634036766  21.76  32.08\n",
+            "...            ...    ...    ...\n",
+            "128797  1658221027  26.95   34.2\n",
+            "128798  1658221207     27  34.38\n",
+            "128799  1658221386  27.07  34.32\n",
+            "128800  1658221566  27.13  34.45\n",
+            "128801  1658221746  27.17  34.49\n",
+            "\n",
+            "[128802 rows x 3 columns]\n",
+            "The average Air Temperature is: 21.05\n",
+            "The average CPU Temperature is: 31.75\n",
+            "The total number of records in the file is: 128801\n",
+            "Press Enter to close the file\n"
+          ]
+        },
+        {
+          "output_type": "error",
+          "ename": "KeyboardInterrupt",
+          "evalue": "ignored",
+          "traceback": [
+            "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+            "\u001b[0;31mKeyboardInterrupt\u001b[0m                         Traceback (most recent call last)",
+            "\u001b[0;32m<ipython-input-16-808354473db7>\u001b[0m in \u001b[0;36m<cell line: 14>\u001b[0;34m()\u001b[0m\n\u001b[1;32m     40\u001b[0m     \u001b[0;31m# Prompt the user to close the file\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     41\u001b[0m     \u001b[0mprint\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m\"Press Enter to close the file\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 42\u001b[0;31m     \u001b[0minput\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mstrip\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/ipykernel/kernelbase.py\u001b[0m in \u001b[0;36mraw_input\u001b[0;34m(self, prompt)\u001b[0m\n\u001b[1;32m    849\u001b[0m                 \u001b[0;34m\"raw_input was called, but this frontend does not support input requests.\"\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    850\u001b[0m             )\n\u001b[0;32m--> 851\u001b[0;31m         return self._input_request(str(prompt),\n\u001b[0m\u001b[1;32m    852\u001b[0m             \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_parent_ident\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    853\u001b[0m             \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_parent_header\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/ipykernel/kernelbase.py\u001b[0m in \u001b[0;36m_input_request\u001b[0;34m(self, prompt, ident, parent, password)\u001b[0m\n\u001b[1;32m    893\u001b[0m             \u001b[0;32mexcept\u001b[0m \u001b[0mKeyboardInterrupt\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    894\u001b[0m                 \u001b[0;31m# re-raise KeyboardInterrupt, to truncate traceback\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 895\u001b[0;31m                 \u001b[0;32mraise\u001b[0m \u001b[0mKeyboardInterrupt\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m\"Interrupted by user\"\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0;32mNone\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    896\u001b[0m             \u001b[0;32mexcept\u001b[0m \u001b[0mException\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0me\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    897\u001b[0m                 \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mlog\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mwarning\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m\"Invalid Message:\"\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mexc_info\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;32mTrue\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;31mKeyboardInterrupt\u001b[0m: Interrupted by user"
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "display_name": "Python 3",
+      "name": "python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 0
+}
